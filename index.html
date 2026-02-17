@@ -58,23 +58,50 @@
         nav a:hover { color: var(--accent); }
 
         /* --- HERO HOME (Bienvenida) --- */
+        /* --- HERO HOME (Corregido para que no se corte) --- */
         .home-hero {
             position: relative;
-            height: 70vh; /* Ocupa casi toda la pantalla */
+            width: 100%;
+            
+            /* 1. MÁRGEN SUPERIOR: Empuja la caja abajo la altura exacta del Header (70px) */
+            margin-top: 70px; 
+            
+            /* 2. ALTURA FLEXIBLE: */
+            /* En lugar de obligar a ser 50vh, le decimos: */
+            /* "Mide al menos el 60% de la pantalla, pero si el texto ocupa más, CRECE" */
+            min-height: 60vh; 
+            height: auto;
+            
+            /* Tu Banner */
+            background-image: url('img/Banner_ElOrange12.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Flexbox para centrar el texto */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px 20px;
             
-            /* FONDO: Reemplaza con tu imagen o usa esta genérica tech */
-            background-image: url('img/Banner_ElOrange12.png'); /* Tu imagen de banner anterior */
-            /* Si la imagen anterior no queda bien de fondo completo, usa una textura oscura: */
-            /* background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop'); */
-            
-            background-size: cover;
-            background-position: center;
+            /* Padding para que el texto no toque los bordes arriba/abajo */
+            padding: 40px 20px; 
+        }
+
+        /* Overlay oscuro (Opcional: Si quieres leer mejor el texto sobre el banner) */
+        /* Si prefieres ver el banner limpio, borra este bloque ::before */
+        .home-hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Oscurece un 60% */
+            z-index: 1;
+        }
+
+        /* Aseguramos que el contenido esté encima del oscurecimiento */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px; /* Evita que las líneas sean eternas en pantallas anchas */
         }
 
         /* Overlay oscuro para leer el texto */
@@ -207,6 +234,30 @@
             .hero-content h1 { font-size: 2.5rem; }
             .grid-container { flex-direction: column; align-items: center; }
             .nav-card { width: 100%; max-width: 400px; }
+        }
+        
+        /* --- RESPONSIVE (Adaptación a pantallas) --- */
+        
+        /* Para tablets y portátiles pequeños */
+        @media (max-width: 1024px) {
+            .hero-content h1 { font-size: 3rem; } /* Reduce un poco el título */
+            .home-hero { min-height: 50vh; }
+        }
+
+        /* Para móviles */
+        @media (max-width: 768px) {
+            .home-hero { 
+                margin-top: 70px; /* Mantiene el empuje del header */
+                min-height: auto; /* Altura automática según contenido */
+                padding: 60px 20px; /* Más aire */
+            }
+            
+            .hero-content h1 { font-size: 2.2rem; } /* Título más pequeño */
+            .hero-content h2 { font-size: 1rem; letter-spacing: 1px; }
+            
+            /* Las tarjetas se ponen una debajo de otra */
+            .grid-container { flex-direction: column; }
+            .nav-card { width: 100%; }
         }
     </style>
 </head>
